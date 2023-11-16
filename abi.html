@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>ABI Encode/Decode</title>
+     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@2.1.0/dist/browser.script.iife.js"></script>
     <script type="text/ruby" src="./flattened_abi_coder-1700126655.rb"></script>
     <script type="text/ruby">
@@ -65,10 +66,14 @@
         white-space: -o-pre-wrap;    /* Opera 7 */
         word-wrap: break-word;       /* Internet Explorer 5.5+ */
       }
+      input, textarea {
+        padding: 6px;
+        border: 1px solid #AED6F1;
+      }
     </style>
 </head>
 <body>
-    <form>
+    <form style="border: 1px solid #AED6F1; background-color: #AED6F1; padding: 0 20px">
       <p>
         <div>types: </div>
           
@@ -79,6 +84,8 @@
         <div>decoded values: </div>
         <textarea id="values" name="values" value="" style="width: 100%" rows=8></textarea>
       </p>
+        <button type="button" id="btnEncode">encode▼</button>
+        <button type="button" id="btnDecode">decode▲</button>
       <p>
         <div>encoded data: </div>
         <textarea id="data" name="data" value="" style="width: 100%" rows="8">
@@ -86,17 +93,16 @@
         </textarea>
       </p>
       <p>
-        <button type="button" id="btnEncode">encode</button>
-        <button type="button" id="btnDecode">decode</button>
       </p>
     </form>
 
-    <hr/>
 
-    example0:<br/>
+    <div style="margin-top:10px; padding: 10px; border: 1px solid lightgrey">
+    example 0:<br/>
     <div style="font-family: monospace">
       types(json array): <br>
       ["uint256", "(uint256,string)"]
+      <br>
       <br>
       values(json array): <br>
       [1234, [1234, "Hello World"]]
@@ -107,15 +113,17 @@
       00000000000000000000000000000000000000000000000000000000000004d2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000004d20000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000b48656c6c6f20576f726c64000000000000000000000000000000000000000000
       </div>
     </div>
+    </div>
 
-    <hr>
 
-    example1:<br/>
+    <div style="margin-top: 10px; padding: 10px; border: 1px solid lightgrey">
+    example 1:<br/>
     <div style="font-family: monospace">
-types(json array): <br>
+      types: <br>
       ["uint256", "(address,uint256)[]", "string"]<br>
       <br>
-      values(json array): <br>
+      <br>
+      values: <br>
       [
         66,
         [["18a475d6741215709ed6cc5f4d064732379b5a58", 1]],
@@ -124,8 +132,9 @@ types(json array): <br>
       <br>
       <br>
       <div style="overflow-wrap: break-word;">
-      data(hex): <br>0000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000100000000000000000000000018a475d6741215709ed6cc5f4d064732379b5a580000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002e516d57426953453942795236767278346876726a71533353473572367745345352713743503252567061665a5756000000000000000000000000000000000000
+      data: <br>0000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000100000000000000000000000018a475d6741215709ed6cc5f4d064732379b5a580000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002e516d57426953453942795236767278346876726a71533353473572367745345352713743503252567061665a5756000000000000000000000000000000000000
       </div>
+    </div>
     </div>
 
     <br>
