@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ABI Encode/Decode</title>
+    <script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@2.1.0/dist/browser.script.iife.js"></script>
+    <script type="text/ruby" src="./flattened_abi_coder-1700126655.rb"></script>
+    <script type="text/ruby">
+      require "js"
+      require "json"
+      module ABI
+        extend AbiCoderRb
+      end
+
+      class String
+        def binary?
+          self.each_char do |char|
+            return true if char.ord < 32 || char.ord > 126
+          end
+          false
+        end
+      end
+
+      def de_transform_item(item)
+        if item.is_a?(String)
+          item.binary? ? ABI.bin_to_hex(item) : item
+        elsif item.is_a?(Array)
+          item.map { |i| de_transform_item(i) }
+        elsif item.is_a?(Hash)
+          item.transform_values { |v| de_transform_item(v) }
+        elsif item.is_a?(Integer)
+          item
+        else
+          item
+        end
+      end
+
+
+      document = JS.global[:document]
+      btn_encode = document.getElementById "btnEncode"
+      btn_encode.addEventListener "click" do
+        types = JSON.parse(document.getElementById("types")[:value].to_s)
+        values = JSON.parse(document.getElementById("values")[:value].to_s)
+        result = ABI.encode(types, values)
+        document.getElementById("data")[:value] = ABI.bin_to_hex(result)
+      end
+
+      btn_decode = document.getElementById "btnDecode"
+      btn_decode.addEventListener "click" do
+        types = JSON.parse(document.getElementById("types")[:value].to_s)
+        data = document.getElementById("data")[:value].to_s.strip
+        result = ABI.decode(types, ABI.hex_to_bin(data))
+        document.getElementById("values")[:value] = de_transform_item(result).to_json
+      end
+          
+    </script>
+
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+      pre {
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
+    </style>
+</head>
+<body>
+    <form>
+      <p>
+        <div>types: </div>
+          
+        <input type="text" id="types" name="types" value='["bytes32","(address,uint256,uint256,address,uint256,address,uint256,bytes)"]' style="width: 100%"></input>
+              
+      </p>
+      <p>
+        <div>decoded values: </div>
+        <textarea id="values" name="values" value="" style="width: 100%" rows=8></textarea>
+      </p>
+      <p>
+        <div>encoded data: </div>
+        <textarea id="data" name="data" value="" style="width: 100%" rows="8">
+2628abe10aaf809f0ea9a33fb15782582e8d8353ea15698d7067b057748581a4000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000001523057a05d6293c1e5171ee33ee0a00000000000000000000000000000000000000000000000000000000000000c30000000000000000000000000000000000000000000000000000000000066eee0000000000000000000000000000000000d2de3e2444926c4577b0a59f1dd8bc000000000000000000000000000000000000000000000000000000000000002c0000000000000000000000000000000000d2de3e2444926c4577b0a59f1dd8bc00000000000000000000000000000000000000000000000000000000000739a4000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000a4394d1bca0000000000000000000000000b001c95e86d64c1ad6e43944c568a6c31b538870000000000000000000000000b001c95e86d64c1ad6e43944c568a6c31b5388700000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000009084128719162207770000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+        </textarea>
+      </p>
+      <p>
+        <button type="button" id="btnEncode">encode</button>
+        <button type="button" id="btnDecode">decode</button>
+      </p>
+    </form>
+
+    <hr/>
+
+    example0:<br/>
+    <div style="font-family: monospace">
+      types(json array): <br>
+      ["uint256", "(uint256,string)"]
+      <br>
+      values(json array): <br>
+      [1234, [1234, "Hello World"]]
+      <br>
+      <br>
+      <div style="overflow-wrap: break-word;">
+      data(hex): <br>
+      00000000000000000000000000000000000000000000000000000000000004d2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000004d20000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000b48656c6c6f20576f726c64000000000000000000000000000000000000000000
+      </div>
+    </div>
+
+    <hr>
+
+    example1:<br/>
+    <div style="font-family: monospace">
+types(json array): <br>
+      ["uint256", "(address,uint256)[]", "string"]<br>
+      <br>
+      values(json array): <br>
+      [
+        66,
+        [["18a475d6741215709ed6cc5f4d064732379b5a58", 1]],
+        "QmWBiSE9ByR6vrx4hvrjqS3SG5r6wE4SRq7CP2RVpafZWV"
+      ]
+      <br>
+      <br>
+      <div style="overflow-wrap: break-word;">
+      data(hex): <br>0000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000100000000000000000000000018a475d6741215709ed6cc5f4d064732379b5a580000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002e516d57426953453942795236767278346876726a71533353473572367745345352713743503252567061665a5756000000000000000000000000000000000000
+      </div>
+    </div>
+
+    <br>
+      more examples: <a href="https://github.com/wuminzhe/abi_coder_rb/tree/main/spec" target="_blank">abi_coder_rb</a>
+</body>
+</html>
