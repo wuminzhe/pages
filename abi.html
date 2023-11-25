@@ -36,8 +36,6 @@
       after_decoding lambda { |type, value|
         if type == "address"
           "0x#{value}"
-        elsif type.start_with?("uint") || type.start_with?("int")
-          "#{value}"
         elsif type.start_with?("bytes")
           "0x#{bin_to_hex(value)}"
         elsif type == "string"
