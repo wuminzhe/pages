@@ -39,7 +39,9 @@
         elsif type.start_with?("bytes")
           "0x#{bin_to_hex(value)}"
         elsif type == "string"
-          value.binary? ? ABI.bin_to_hex(value) : value
+          if value.binary? 
+            value.force_encoding("UTF-8")
+          end
         else
           value
         end
@@ -99,7 +101,7 @@
         [
             true,
             false,
-            "4d6f6f20c3a9f09f9a806fc3a92020206f4d6f6ff09f9a80206f20f09f9a806ff09f9a806ff09f9a80f09f9a806ff09f9a806fc3a94d20204d4df09f9a806f6f6f4d6f6f4d4d20f09f9a806fc3a920206fc3a920c3a96f4d6f20206f6f6f",
+            "Moo é🚀oé   oMoo🚀 o 🚀o🚀o🚀🚀o🚀oéM  MM🚀oooMooMM 🚀oé  oé éoMo  ooo",
             [
                 "0x0f921c",
                 "0x1e0e9f",
@@ -109,10 +111,10 @@
         ],
         2.298091420557911e+32,
         [
-            "4d6f6f20c3a9f09f9a80c3a9f09f9a80f09f9a80f09f9a80f09f9a80",
-            "4d6f6f20c3a9f09f9a80c3a9f09f9a806ff09f9a806f4d202020f09f9a806f6f6f6f",
-            "4d6f6f20c3a9f09f9a8020c3a9c3a920c3a9206f4dc3a9c3a94d6f20c3a94d206ff09f9a806f6f4d6f204dc3a96f6ff09f9a8020204d6fc3a94d206ff09f9a806f4d20c3a94d4df09f9a80f09f9a80f09f9a806f206fc3a96f6f20206f",
-            "4d6f6f20c3a9f09f9a8020206fc3a96f6fc3a9c3a9"
+            "Moo é🚀é🚀🚀🚀🚀",
+            "Moo é🚀é🚀o🚀oM   🚀oooo",
+            "Moo é🚀 éé é oMééMo éM o🚀ooMo Méoo🚀  MoéM o🚀oM éMM🚀🚀🚀o oéoo  o",
+            "Moo é🚀  oéooéé"
         ],
         true,
         [
@@ -133,10 +135,10 @@
                         -9.262360692210346e+25
                     ]
                 ],
-                "4d6f6f20c3a9f09f9a80f09f9a80206f20f09f9a806fc3a920f09f9a80f09f9a8020f09f9a8020c3a9c3a96f6fc3a96fc3a96f20"
+                "Moo é🚀🚀 o 🚀oé 🚀🚀 🚀 ééooéoéo "
             ],
             [
-                "4d6f6f20c3a9f09f9a80",
+                "Moo é🚀",
                 2.8610939720196726e+28,
                 [
                     [
@@ -148,9 +150,9 @@
                             [
                                 [
                                     [
-                                        "4d6f6f20c3a9f09f9a804dc3a96f20",
-                                        "4d6f6f20c3a9f09f9a804d4d20",
-                                        "4d6f6f20c3a9f09f9a80f09f9a80f09f9a80206fc3a96ff09f9a80f09f9a806f4d6ff09f9a804df09f9a8020f09f9a802020f09f9a806f4d4d"
+                                        "Moo é🚀Méo ",
+                                        "Moo é🚀MM ",
+                                        "Moo é🚀🚀🚀 oéo🚀🚀oMo🚀M🚀 🚀  🚀oMM"
                                     ]
                                 ]
                             ]
@@ -163,9 +165,9 @@
                             [
                                 [
                                     [
-                                        "4d6f6f20c3a9f09f9a806fc3a96f6f6f4d6f6f4df09f9a80f09f9a806ff09f9a806fc3a96f4df09f9a806f6ff09f9a806f4dc3a9c3a96f6fc3a96fc3a9f09f9a806f6f204d6f6f4df09f9a80",
-                                        "4d6f6f20c3a9f09f9a80c3a96f4dc3a9f09f9a8020f09f9a80f09f9a806f4d6fc3a94d6f4d6ff09f9a80c3a9c3a9f09f9a804d6f20c3a9c3a920c3a94d6ff09f9a806f4d4d6f6f6f20c3a96fc3a9204df09f9a804d6f",
-                                        "4d6f6f20c3a9f09f9a80c3a9f09f9a806f4d206f6f20f09f9a80f09f9a802020204d4d4d6f206ff09f9a806f4d4d6f4d4dc3a920f09f9a80f09f9a80204d6f204dc3a9f09f9a806f204d206f4df09f9a806f2020f09f9a80c3a9f09f9a80"
+                                        "Moo é🚀oéoooMooM🚀🚀o🚀oéoM🚀oo🚀oMééooéoé🚀oo MooM🚀",
+                                        "Moo é🚀éoMé🚀 🚀🚀oMoéMoMo🚀éé🚀Mo éé éMo🚀oMMooo éoé M🚀Mo",
+                                        "Moo é🚀é🚀oM oo 🚀🚀   MMMo o🚀oMMoMMé 🚀🚀 Mo Mé🚀o M oM🚀o  🚀é🚀"
                                     ]
                                 ]
                             ]
@@ -178,9 +180,9 @@
                             [
                                 [
                                     [
-                                        "4d6f6f20c3a9f09f9a806fc3a94d206fc3a9206f206f6f204d4d6f6f6f6f4d4d6f20c3a9c3a920204d6f6f204d6f4d",
-                                        "4d6f6f20c3a9f09f9a80",
-                                        "4d6f6f20c3a9f09f9a80"
+                                        "Moo é🚀oéM oé o oo MMooooMMo éé  Moo MoM",
+                                        "Moo é🚀",
+                                        "Moo é🚀"
                                     ]
                                 ]
                             ]
@@ -193,9 +195,9 @@
                             [
                                 [
                                     [
-                                        "4d6f6f20c3a9f09f9a80202020",
-                                        "4d6f6f20c3a9f09f9a806ff09f9a804d6f4d4d20f09f9a8020204d6fc3a9c3a920206f4df09f9a80c3a9c3a96f204d4d6fc3a94df09f9a80206f4d6fc3a9206f6f",
-                                        "4d6f6f20c3a9f09f9a806f6f4d6ff09f9a806f6f206f206f4d206ff09f9a806f4d204d20206f6f4d6f6f6f6f2020c3a9f09f9a806f6ff09f9a802020c3a96ff09f9a804df09f9a80"
+                                        "Moo é🚀   ",
+                                        "Moo é🚀o🚀MoMM 🚀  Moéé  oM🚀ééo MMoéM🚀 oMoé oo",
+                                        "Moo é🚀ooMo🚀oo o oM o🚀oM M  ooMoooo  é🚀oo🚀  éo🚀M🚀"
                                     ]
                                 ]
                             ]
@@ -203,11 +205,11 @@
                     ],
                     "0x56",
                     [
-                        "4d6f6f20c3a9f09f9a80",
+                        "Moo é🚀",
                         [
                             "0x8c49432712f2798ba72867212740aa3801fa7f9c",
                             [
-                                "4d6f6f20c3a9f09f9a806fc3a9c3a96f6f6ff09f9a806f",
+                                "Moo é🚀oééooo🚀o",
                                 [
                                     [
                                         false,
@@ -229,7 +231,7 @@
                                         2.4723906564162784e+74
                                     ]
                                 ],
-                                "4d6f6f20c3a9f09f9a804d6ff09f9a80206f4d6f206ff09f9a806f4d6f4d4df09f9a806f4d4df09f9a80c3a94d2020206f6f206ff09f9a806f4d6f6f6f6f20f09f9a80f09f9a80206f4dc3a9f09f9a8020c3a9206f20"
+                                "Moo é🚀Mo🚀 oMo o🚀oMoMM🚀oMM🚀éM   oo o🚀oMoooo 🚀🚀 oMé🚀 é o "
                             ]
                         ],
                         false
@@ -238,10 +240,10 @@
                     [
                         [
                             [
-                                "4d6f6f20c3a9f09f9a806f206f6fc3a94d4d6fc3a94d4d6f204d4d6f6ff09f9a806f20c3a96fc3a9f09f9a806f",
-                                "4d6f6f20c3a9f09f9a806ff09f9a806f4d4d4dc3a920206fc3a96f4dc3a9f09f9a804d6fc3a9c3a96f6f4d20f09f9a80",
-                                "4d6f6f20c3a9f09f9a80",
-                                "4d6f6f20c3a9f09f9a806fc3a9f09f9a806f4d"
+                                "Moo é🚀o ooéMMoéMMo MMoo🚀o éoé🚀o",
+                                "Moo é🚀o🚀oMMMé  oéoMé🚀MoééooM 🚀",
+                                "Moo é🚀",
+                                "Moo é🚀oé🚀oM"
                             ]
                         ]
                     ]
@@ -250,7 +252,7 @@
                     true,
                     true
                 ],
-                "4d6f6f20c3a9f09f9a80f09f9a80206ff09f9a806f6f4d2020f09f9a806f4dc3a9f09f9a806f4d4d"
+                "Moo é🚀🚀 o🚀ooM  🚀oMé🚀oMM"
             ]
         ]
     ]
