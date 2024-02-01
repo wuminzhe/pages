@@ -51,7 +51,7 @@
     document = JS.global[:document]
     btn_encode = document.getElementById "btnEncode"
     btn_encode.addEventListener "click" do
-      try {
+      begin
         type = document.getElementById("type")[:value].to_s.strip
         value = JSON.parse(document.getElementById("value")[:value].to_s)
         puts "type:"
@@ -60,21 +60,21 @@
         p value
         result = ABI.encode(type, value)
         document.getElementById("data")[:value] = "0x" + ABI.bin_to_hex(result)
-      } catch (e) {
-        alert(e)
-      }
+      rescue => e
+        JS.global.alert(e.message)
+      end
     end
 
     btn_decode = document.getElementById "btnDecode"
     btn_decode.addEventListener "click" do
-      try {
+      begin
         type = document.getElementById("type")[:value].to_s.strip
         data = document.getElementById("data")[:value].to_s.strip
         result = ABI.decode(type, ABI.hex_to_bin(data))
         document.getElementById("value")[:value] = result.to_json
-      } catch (e) {
-        alert(e)
-      }
+      rescue => e
+        JS.global.alert(e.message)
+      end
     end
 
     </script>
