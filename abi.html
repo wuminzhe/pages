@@ -41,6 +41,8 @@
         elsif type == "string"
           if value.binary? 
             value.force_encoding("UTF-8")
+          else
+            value
           end
         else
           value
